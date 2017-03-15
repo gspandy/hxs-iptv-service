@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://cxf.apache.org/jaxrs
+    http://cxf.apache.org/schemas/jaxrs.xsd">
+
+    <bean id="myInterceptor" class="com.eeduspace.cibn.interceptor.CIBNMyInterceptor"/>
+    <bean id="myOutInterceptor" class="com.eeduspace.cibn.interceptor.CIBNMyOutInterceptor"/>
+    <bean id="userLogWs" class="com.eeduspace.cibn.ws.UserLogWs" />
+	<bean id="testWs" class="com.eeduspace.cibn.ws.TestWs" />
+	<bean id="userWs" class="com.eeduspace.cibn.ws.UserWs" />
+	<bean id="vipBuyWs" class="com.eeduspace.cibn.ws.VipBuyRecordWs" />
+	<bean id="baseDataWs" class="com.eeduspace.cibn.ws.BaseDataWs" />
+	<bean id="courseFavoritesWs" class="com.eeduspace.cibn.ws.CourseFavoritesWs" />
+	<bean id="loginWs" class="com.eeduspace.cibn.ws.LoginWs" />
+	<bean id="diagnosticReportWs" class="com.eeduspace.cibn.ws.DiagnosticReportWs" />
+	<bean id="paperWs" class="com.eeduspace.cibn.ws.PaperWs" />
+	<bean id="courseVideoWs" class="com.eeduspace.cibn.ws.CourseVideoWs"/>
+	<bean id="wxPayNoticeWs" class="com.eeduspace.cibn.ws.WxPayNoticeWs"/>
+	<bean id="vipPackWs" class="com.eeduspace.cibn.ws.VipPackWs"/>
+	<bean id="alipayNoticeWs" class="com.eeduspace.cibn.ws.AlipayNoticeWs"/>
+	<bean id="appUpdateWs" class="com.eeduspace.cibn.ws.AppUpdateWs"/>
+	<bean id="rankMessageWs" class="com.eeduspace.cibn.ws.RankMessageWs"/>
+	<bean id="productBuyRecordWs" class="com.eeduspace.cibn.ws.ProductBuyRecordWs"/>
+	<bean id="productWs" class="com.eeduspace.cibn.ws.ProductWs"/>
+	<!-- 这里的地址很重要，客户端需要通过这个地址来访问WebService -->
+	<jaxrs:server id="spring-app-cloud-auth" address="/cibnws">
+		<jaxrs:serviceBeans>
+			<ref bean="alipayNoticeWs" />
+			<ref bean="paperWs" />
+			<ref bean="vipPackWs" />
+			<ref bean="wxPayNoticeWs"/>
+			<ref bean="diagnosticReportWs" />
+			<ref bean="testWs" />
+			<ref bean="userWs" />
+			<ref bean="vipBuyWs" />
+			<ref bean="baseDataWs" />
+			<ref bean="courseFavoritesWs" />
+			<ref bean="loginWs" />
+			<ref bean="courseVideoWs" />
+			<ref bean="userLogWs" />
+    		<ref bean="myInterceptor" />
+    		<ref bean="myOutInterceptor" />
+    		<ref bean="appUpdateWs" />
+    		<ref bean="rankMessageWs" />
+    		<ref bean="productBuyRecordWs" />
+    		<ref bean="productWs" />
+      	</jaxrs:serviceBeans>
+		<jaxrs:providers>
+			<ref bean="jaxbProvider" />
+			<ref bean="jsonProvider" />
+			<bean
+				class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter" />
+		</jaxrs:providers>
+		<jaxrs:extensionMappings>
+		</jaxrs:extensionMappings>
+		<jaxrs:languageMappings>
+			<entry key="cn" value="ch-CN" />
+		</jaxrs:languageMappings>
+		<jaxrs:inInterceptors>
+			<ref bean="myInterceptor"/>
+		</jaxrs:inInterceptors>
+        <jaxrs:outInterceptors>
+            <ref bean="myOutInterceptor" />
+        </jaxrs:outInterceptors>
+	</jaxrs:server>
+</beans>
